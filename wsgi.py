@@ -3,7 +3,7 @@ from logging import getLogger
 
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from app import create_app
+from od_compiler import create_app
 
 if __name__ == "__main__":
     app = create_app(logger_override=DEBUG)

@@ -5,12 +5,12 @@ from time import sleep
 from gitdb.exc import BadName
 
 import docker
-from app.util.compiler_logger import compile_logger
-from app.util.git_actions import updateOD
-from app.util.utilities import cleanOldRuns
-from app.util.utilities import splitLogs
-from app.util.utilities import stageBuild
-from app.util.utilities import writeOutput
+from od_compiler.util.compiler_logger import compile_logger
+from od_compiler.util.git_actions import updateOD
+from od_compiler.util.utilities import cleanOldRuns
+from od_compiler.util.utilities import splitLogs
+from od_compiler.util.utilities import stageBuild
+from od_compiler.util.utilities import writeOutput
 
 client = docker.from_env()
 

@@ -2,7 +2,7 @@ from pathlib import Path
 
 from git import Repo
 
-from app.util.compiler_logger import compile_logger
+from od_compiler.util.compiler_logger import compile_logger
 
 
 OD_REPO_PATH = Path.cwd().joinpath("OpenDream")

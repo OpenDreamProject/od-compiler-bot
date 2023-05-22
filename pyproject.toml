@@ -3,7 +3,11 @@ name = "od-compiler"
 version = "0.1.2"
 description = "OpenDream compiler listener"
 authors = ["Crossedfall <ping@crossedfall.io>"]
+maintainers = ["Crossedfall <ping@crossedfall.io>"]
 readme = "README.md"
+license = "MIT"
+repository = "https://github.com/OpenDreamProject/od-compiler-bot"
+packages = [{include = "od_compiler"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -27,3 +31,7 @@ skip = ".git,.venv,*.lock,runs,OpenDream"
 builtin = "clear,rare,code,en-GB_to_en-US"
 ignore-words-list = "od,ro"
 quiet = 3
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

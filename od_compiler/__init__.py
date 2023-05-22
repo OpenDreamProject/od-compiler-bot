@@ -4,8 +4,8 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 
-from app.util.compiler_logger import compile_logger
-from app.util.docker_actions import compileOD
+from od_compiler.util.compiler_logger import compile_logger
+from od_compiler.util.docker_actions import compileOD
 
 compile = Blueprint("compile", __name__, url_prefix="/")
 

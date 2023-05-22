@@ -4,7 +4,7 @@ import string
 from os.path import getctime
 from pathlib import Path
 
-from app.util.compiler_logger import compile_logger
+from od_compiler.util.compiler_logger import compile_logger
 
 MAIN_PROC = "proc/main()"
 CODE_FILE = Path.cwd().joinpath("templates/code.dm")
