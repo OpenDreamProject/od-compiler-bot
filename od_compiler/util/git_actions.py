@@ -40,4 +40,4 @@ def updateSubmodules(od_repo: Repo) -> None:
     """
     for submodule in od_repo.submodules:
         submodule.update(init=True, recursive=True)
-        compile_logger.info(f"{submodule.name} is at {submodule.hexsha}")
+        compile_logger.info(f"{submodule.name} is at: {submodule.hexsha}")
