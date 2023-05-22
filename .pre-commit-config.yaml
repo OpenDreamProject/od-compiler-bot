@@ -31,3 +31,8 @@ repos:
     - id: codespell
       additional_dependencies:
       - tomli
+
+  -   repo: https://github.com/pre-commit/mirrors-mypy
+      rev: bd424e4
+      hooks:
+      -   id: mypy

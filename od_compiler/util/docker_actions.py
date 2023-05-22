@@ -4,7 +4,8 @@ from time import sleep
 
 from gitdb.exc import BadName
 
-import docker
+from docker.client import from_env as docker_from_env
+from docker.errors import BuildError
 from od_compiler.util.compiler_logger import compile_logger
 from od_compiler.util.git_actions import updateOD
 from od_compiler.util.utilities import cleanOldRuns
@@ -12,7 +13,7 @@ from od_compiler.util.utilities import splitLogs
 from od_compiler.util.utilities import stageBuild
 from od_compiler.util.utilities import writeOutput
 
-client = docker.from_env()
+client = docker_from_env()
 
 
 def updateBuildImage() -> None:
@@ -37,7 +38,7 @@ def updateBuildImage() -> None:
     client.images.prune(filters={"dangling": True})
 
 
-def compileOD(codeText: str, compile_args: list, timeout: int = 30) -> dict:
+def compileOD(codeText: str, compile_args: list[str], timeout: int = 30) -> dict[str, object]:
     """
     Create an OpenDream docker container to compile and run arbitrary code.
     Returns A dictionary containing the compiler and server logs.
@@ -49,12 +50,11 @@ def compileOD(codeText: str, compile_args: list, timeout: int = 30) -> dict:
     """
     try:
         updateBuildImage()
-    except docker.errors.BuildError as e:
+    except BuildError as e:
         results = {"build_error": True, "exception": str(e)}
         return results
 
-    timestamp = datetime.now()
-    timestamp = timestamp.strftime("%Y%m%d-%H.%M.%S.%f")
+    timestamp = datetime.now().strftime("%Y%m%d-%H.%M.%S.%f")
     randomDir = Path.cwd().joinpath(f"runs/{timestamp}")
 
     stageBuild(codeText=codeText, dir=randomDir)

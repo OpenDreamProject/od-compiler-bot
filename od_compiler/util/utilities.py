@@ -28,12 +28,13 @@ def cleanOldRuns(num_to_keep: int = 5) -> None:
         shutil.rmtree(runs.pop(0))
 
 
-def splitLogs(logs: str, killed: bool = False) -> dict:
+def splitLogs(logs: str, killed: bool = False) -> dict[str, str]:
     """
     Split the container logs into compiler and server logs.
     Returns a dictionary containing 'compiler' and 'server' logs.
 
     logs: Docker container log output to be parsed
+    killed: Boolean indicating if the run was killed early or not
     """
     if killed:
         logs_regex = re.compile(
@@ -66,7 +67,7 @@ def splitLogs(logs: str, killed: bool = False) -> dict:
     return parsed
 
 
-def loadTemplate(line: str, includeProc=True) -> string:
+def loadTemplate(line: str, includeProc=True) -> str:
     """
     Replaces the placeholder lines within the template file with the provided run-code.
     Returns a template string which can be written to a run file.
