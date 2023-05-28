@@ -22,7 +22,9 @@ def updateOD(od_repo_path: Path, clean: int = False) -> None:
     else:
         compile_logger.info("Repo not found. Cloning from GitHub.")
         od = Repo.clone_from(
-            url="https://github.com/OpenDreamProject/OpenDream.git", to_path=od_repo_path, multi_options=["--depth 1"]
+            url="https://github.com/OpenDreamProject/OpenDream.git",
+            to_path=od_repo_path,
+            multi_options=["--depth 1", "--recurse-submodules", "--shallow-submodules"],
         )
 
     compile_logger.info(f"The OpenDream repo is at: {od.head.commit.hexsha}")
