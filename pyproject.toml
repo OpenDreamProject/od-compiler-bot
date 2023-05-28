@@ -24,6 +24,7 @@ codespell = "^2.2.4"
 pytest = "^7.3.1"
 mypy = "^1.3.0"
 pytest-cov = "^4.0.0"
+pytest-depends = "^1.0.1"
 
 [tool.poetry.scripts]
 compiler = "wsgi:main"
@@ -43,7 +44,7 @@ ignore-words-list = "od,ro"
 quiet = 3
 
 [tool.pytest.ini_options]
-addopts = "--cov=od_compiler"
+addopts = "--cov=od_compiler -p no:legacypath"
 testpaths = [
 	"tests",
 ]
@@ -61,3 +62,8 @@ warn_return_any = true
 warn_unreachable = true
 warn_unused_configs = true
 no_implicit_reexport = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+warn_return_any = false
+implicit_reexport = true

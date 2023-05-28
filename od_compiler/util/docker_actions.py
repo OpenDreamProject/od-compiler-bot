@@ -20,11 +20,12 @@ def updateBuildImage() -> None:
     """
     Update OpenDream and then use Docker's build context to see if we need to build a new image.
     """
+    od_path = Path.cwd().joinpath("OpenDream")
     try:
-        updateOD()
+        updateOD(od_repo_path=od_path)
     except BadName:
         compile_logger.warning("There was an error updating the repo. Cleaning up and trying again.")
-        updateOD(clean=True)
+        updateOD(od_repo_path=od_path, clean=True)
 
     compile_logger.info("Building the docker image...")
     client.images.build(
@@ -56,6 +57,7 @@ def compileOD(codeText: str, compile_args: list[str], timeout: int = 30) -> dict
 
     timestamp = datetime.now().strftime("%Y%m%d-%H.%M.%S.%f")
     randomDir = Path.cwd().joinpath(f"runs/{timestamp}")
+    randomDir.mkdir(parents=True)
 
     stageBuild(codeText=codeText, dir=randomDir)
 
@@ -89,7 +91,7 @@ def compileOD(codeText: str, compile_args: list[str], timeout: int = 30) -> dict
     parsed_logs = splitLogs(logs=logs, killed=test_killed)
     container.remove(v=True, force=True)
     writeOutput(logs=logs, dir=randomDir)
-    cleanOldRuns()
+    cleanOldRuns(run_dir=Path.cwd().joinpath("runs"))
     compile_logger.info("Run complete!")
 
     if "error" in parsed_logs.keys():

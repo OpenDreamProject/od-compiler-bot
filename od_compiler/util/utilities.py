@@ -6,20 +6,19 @@ from pathlib import Path
 
 from od_compiler.util.compiler_logger import compile_logger
 
-MAIN_PROC = "proc/main()"
+MAIN_PROC = "/proc/main()"
 CODE_FILE = Path.cwd().joinpath("templates/code.dm")
 TEST_DME = Path.cwd().joinpath("templates/test.dme")
 MAP_FILE = Path.cwd().joinpath("templates/map.dmm")
 OD_CONF = Path.cwd().joinpath("templates/server_config.toml")
 
 
-def cleanOldRuns(num_to_keep: int = 5) -> None:
+def cleanOldRuns(run_dir: Path, num_to_keep: int = 5) -> None:
     """
     Remove the oldest runs, keeping the n most recent runs.
 
     num_to_keep: Number of historic runs that should be maintained
     """
-    run_dir = Path.cwd().joinpath("runs")
     runs = [x for x in run_dir.iterdir() if x.is_dir()]
     runs.sort(key=getctime)
 
@@ -80,7 +79,7 @@ def loadTemplate(line: str, includeProc=True) -> str:
 
     if includeProc:
         line = "\n\t".join(line.splitlines())
-        d = {"proc": MAIN_PROC, "code": f"{line}\n"}
+        d = {"proc": MAIN_PROC, "code": f"\t{line}\n"}
     else:
         d = {"proc": line, "code": ""}
 
@@ -94,7 +93,6 @@ def stageBuild(codeText: str, dir: Path) -> None:
     codeText: Arbitrary code to be loaded into a template file
     dir: Run directory that'll house all of the needed files
     """
-    dir.mkdir(parents=True)
     shutil.copyfile(TEST_DME, dir.joinpath("test.dme"))
     shutil.copyfile(MAP_FILE, dir.joinpath("map.dmm"))
     shutil.copyfile(OD_CONF, dir.joinpath("server_config.toml"))
