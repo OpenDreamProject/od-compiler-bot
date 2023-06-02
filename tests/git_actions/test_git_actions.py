@@ -9,7 +9,5 @@ from od_compiler.util.git_actions import updateOD
 from od_compiler.util.git_actions import updateSubmodules
 
 
-@patch("git.Repo")
-@patch("git.Git")
 def test_update_od():
     pass

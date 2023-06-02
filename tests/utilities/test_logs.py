@@ -7,7 +7,7 @@ from od_compiler.util.utilities import splitLogs
 from od_compiler.util.utilities import writeOutput
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="module")
 def test_logs() -> str:
     with open("tests/utilities/resources/run_logs.txt", "r") as log_file:
         logs = log_file.read()
