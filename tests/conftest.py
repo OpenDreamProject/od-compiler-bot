@@ -1,12 +1,13 @@
 from pathlib import Path
 
 import pytest
+from pytest import TempPathFactory
 
 
 @pytest.fixture(scope="session", autouse=True)
-def build_dir(tmp_path_factory) -> Path:
+def build_dir(tmp_path_factory: TempPathFactory) -> Path:
     """Build dir for each run"""
-    build_dir = tmp_path_factory.mktemp("od_compile_test")
+    build_dir = Path(tmp_path_factory.mktemp("od_compile_test"))
     return build_dir
 
 

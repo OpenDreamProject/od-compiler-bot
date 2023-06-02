@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import pytest
 
 from od_compiler.util.utilities import cleanOldRuns
@@ -7,7 +5,7 @@ from od_compiler.util.utilities import stageBuild
 from tests.utilities import runs_list
 
 
-def test_build_staging_create_files_without_main(build_dir: Path):
+def test_build_staging_create_files_without_main(build_dir):
     code = 'world.log << "Hello!"'
     expected_files = ["server_config.toml", "code.dm", "test.dme", "map.dmm"]
     stage_dir = build_dir.joinpath("staging")
@@ -18,7 +16,7 @@ def test_build_staging_create_files_without_main(build_dir: Path):
     assert expected_files == files
 
 
-def test_build_staging_create_files_with_defined_main(build_dir: Path):
+def test_build_staging_create_files_with_defined_main(build_dir):
     code = """\
 /proc/example()
   world.log << "Hello!"
@@ -36,7 +34,7 @@ def test_build_staging_create_files_with_defined_main(build_dir: Path):
 
 
 @pytest.mark.depends(on=["test_build_staging_create_files_with_defined_main"])
-def test_build_staging_verify_file_contents(build_dir: Path):
+def test_build_staging_verify_file_contents(build_dir):
     expected_output = """\
 /var/TEST/aaaaaa=new
 
@@ -58,13 +56,13 @@ def test_build_staging_verify_file_contents(build_dir: Path):
     assert code_output == expected_output
 
 
-def test_run_cleanup_final_len(test_run_dir: Path):
+def test_run_cleanup_final_len(test_run_dir):
     cleanOldRuns(run_dir=test_run_dir, num_to_keep=5)
     runs = runs_list(test_run_dir)
     assert len(runs) == 5
 
 
 @pytest.mark.depends(on=["test_run_cleanup_final_len"])
-def test_run_cleanup_verify_remaining_order(test_run_dir: Path):
+def test_run_cleanup_verify_remaining_order(test_run_dir):
     runs = [int(run.name) for run in runs_list(test_run_dir)]
     assert sorted(runs) == list(range(min(runs), max(runs) + 1))

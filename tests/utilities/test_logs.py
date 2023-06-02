@@ -29,7 +29,7 @@ def test_split_logs_error():
     assert "error" in parsed.keys()
 
 
-def test_write_output(build_dir: Path):
+def test_write_output(build_dir):
     log = "PASSED"
     writeOutput(logs=log, dir=build_dir)
     log_out = build_dir.joinpath("run_logs.txt").read_text()

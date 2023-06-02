@@ -67,5 +67,3 @@ no_implicit_reexport = true
 
 [[tool.mypy.overrides]]
 module = "tests.*"
-warn_return_any = false
-implicit_reexport = true
