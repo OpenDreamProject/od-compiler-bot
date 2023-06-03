@@ -52,6 +52,10 @@ jobs:
         if: steps.cache-poetry.outputs.cache-hit != 'true'
         run: |
           poetry install
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ runner.os }}-pre_commit-${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Pre-commit linters
         run: |
-          poetry run pre-commit run --all-files
+          poetry run pre-commit run --show-diff-on-failure --color=always --all-files
