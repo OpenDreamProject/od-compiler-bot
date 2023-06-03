@@ -1,3 +1,5 @@
+[![CI](https://github.com/OpenDreamProject/od-compiler-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/OpenDreamProject/od-compiler-bot/actions/workflows/ci.yml)
+
 ## Requirements:
 
 1. Python 3.11
