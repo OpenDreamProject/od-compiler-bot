@@ -7,13 +7,13 @@ from tests.utilities import runs_list
 
 def test_build_staging_create_files_without_main(build_dir):
     code = 'world.log << "Hello!"'
-    expected_files = ["server_config.toml", "code.dm", "test.dme", "map.dmm"]
+    expected_files = ["code.dm", "map.dmm", "server_config.toml", "test.dme"]
     stage_dir = build_dir.joinpath("staging")
     stage_dir.mkdir()
 
     stageBuild(codeText=code, dir=stage_dir)
     files = [file.name for file in stage_dir.iterdir()]
-    assert expected_files == files
+    assert expected_files == sorted(files)
 
 
 def test_build_staging_create_files_with_defined_main(build_dir):
@@ -24,13 +24,13 @@ def test_build_staging_create_files_with_defined_main(build_dir):
 /proc/main()
   example()
 """
-    expected_files = ["server_config.toml", "code.dm", "test.dme", "map.dmm"]
+    expected_files = ["code.dm", "map.dmm", "server_config.toml", "test.dme"]
     stage_dir = build_dir.joinpath("staging_proc")
     stage_dir.mkdir()
 
     stageBuild(codeText=code, dir=stage_dir)
     files = [file.name for file in stage_dir.iterdir()]
-    assert expected_files == files
+    assert expected_files == sorted(files)
 
 
 @pytest.mark.depends(on=["test_build_staging_create_files_with_defined_main"])
