@@ -15,7 +15,7 @@ def test_standard_compile(build_dir):
     assert test_output.keys() >= {"compiler", "server", "timeout"}
 
 
-@pytest.mark.order(index=-2)
+@pytest.mark.order(index=-1)
 def test_complex_compile(build_dir):
     code = """\
 /proc/example()
@@ -30,7 +30,7 @@ def test_complex_compile(build_dir):
     assert test_output.keys() >= {"compiler", "server", "timeout"}
 
 
-@pytest.mark.order(index=-2)
+@pytest.mark.order(index=-1)
 def test_build_error(build_dir, mocker):
     mocker.patch(
         "od_compiler.util.docker_actions.updateBuildImage", side_effect=BuildError(reason="pytest", build_log="pytest")
@@ -42,7 +42,7 @@ def test_build_error(build_dir, mocker):
     assert "build_error" in test_output.keys()
 
 
-@pytest.mark.order(index=-3)
+@pytest.mark.order(index=-1)
 def test_compile_timeout(build_dir):
     code = 'world.log << "Sleeping"\nsleep(500)'
 
@@ -51,7 +51,7 @@ def test_compile_timeout(build_dir):
     assert test_output["timeout"] is True
 
 
-@pytest.mark.order(index=-4)
+@pytest.mark.order(index=-1)
 def test_compile_bad_logs(build_dir, mocker):
     logs_return = {"error": "pytest"}
     mocker.patch("od_compiler.util.docker_actions.splitLogs", return_value=logs_return)
