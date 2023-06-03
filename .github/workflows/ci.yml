@@ -36,6 +36,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
+      - name: Python setup
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: Install poetry
+        run: |
+          python -m pip install -U poetry
       - id: cache-poetry
         uses: actions/cache@v3
         with:
@@ -43,5 +50,8 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
       - name: Install dependencies
         if: steps.cache-poetry.outputs.cache-hit != 'true'
+        run: |
+          poetry install
+      - name: Pre-commit linters
         run: |
           poetry run pre-commit run --all-files
