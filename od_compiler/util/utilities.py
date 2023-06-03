@@ -88,7 +88,8 @@ def loadTemplate(line: str, includeProc=True) -> str:
 
 def stageBuild(codeText: str, dir: Path) -> None:
     """
-    Create a directory for the current run and copy over the needed files. Creates the run file containing provided arbitrary code.
+    Create a directory for the current run and copy over the needed files.
+    Creates the run file containing provided arbitrary code.
 
     codeText: Arbitrary code to be loaded into a template file
     dir: Run directory that'll house all of the needed files
