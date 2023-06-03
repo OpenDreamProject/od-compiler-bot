@@ -19,4 +19,4 @@ if __name__ == "__main__":
 gunicorn_logger = getLogger("gunicorn.error")
 
 app = create_app(logger_override=gunicorn_logger.level)
-app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_host=1)  # type: ignore[method-assign]

@@ -30,6 +30,7 @@ pytest-mock = "^3.10.0"
 
 [tool.poetry.scripts]
 compiler = "wsgi:main"
+test = "pytest:main"
 
 [build-system]
 requires = ["poetry-core"]
@@ -40,7 +41,7 @@ line-length = 120
 
 [tool.codespell]
 count = ""
-skip = ".git,.venv,*.lock,runs,OpenDream"
+skip = ".git,.venv,*.lock,runs,OpenDream,.mypy_cache"
 builtin = "clear,rare,code,en-GB_to_en-US"
 ignore-words-list = "od,ro"
 quiet = 3
