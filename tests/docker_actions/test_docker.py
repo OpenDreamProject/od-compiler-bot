@@ -1,16 +1,29 @@
 from os import chdir
 
 import pytest
-from gitdb.exc import BadName
 
 from docker.errors import BuildError
 from od_compiler.util.docker_actions import compileOD
-from od_compiler.util.docker_actions import updateBuildImage
 
 
 @pytest.mark.order(index=-1)
 def test_standard_compile(build_dir):
     code = 'world.log << "Hello, pytest!"'
+
+    chdir(build_dir)
+    test_output = compileOD(codeText=code, compile_args=[""], timeout=30)
+    assert test_output.keys() >= {"compiler", "server", "timeout"}
+
+
+@pytest.mark.order(index=-2)
+def test_complex_compile(build_dir):
+    code = """\
+/proc/example()
+  world.log << "Hello!"
+
+/proc/main()
+  example
+"""
 
     chdir(build_dir)
     test_output = compileOD(codeText=code, compile_args=[""], timeout=30)
