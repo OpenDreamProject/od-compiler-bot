@@ -16,7 +16,7 @@ from docker.errors import BuildError
 client = docker_from_env()
 
 
-def updateBuildImage() -> None:
+def updateBuildImage(build_Config: str) -> None:
     """
     Update OpenDream and then use Docker's build context to see if we need to build a new image.
     """
@@ -35,11 +35,14 @@ def updateBuildImage() -> None:
         pull=True,
         encoding="gzip",
         tag="od-compiler:latest",
+        buildargs={"BULD_CONFIG": build_Config},
     )
     client.images.prune(filters={"dangling": True})
 
 
-def compileOD(codeText: str, compile_args: list[str], timeout: int = 30) -> dict[str, object]:
+def compileOD(
+    codeText: str, compile_args: list[str], build_args: str = "Release", timeout: int = 30
+) -> dict[str, object]:
     """
     Create an OpenDream docker container to compile and run arbitrary code.
     Returns A dictionary containing the compiler and server logs.
@@ -50,7 +53,7 @@ def compileOD(codeText: str, compile_args: list[str], timeout: int = 30) -> dict
     timeout: Maximum duration a container is allowed to run for
     """
     try:
-        updateBuildImage()
+        updateBuildImage(build_Config=build_args)
     except BuildError as e:
         results = {"build_error": True, "exception": str(e)}
         return results
