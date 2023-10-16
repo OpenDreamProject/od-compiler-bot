@@ -30,9 +30,9 @@ def startCompile() -> Response:
     compile_logger.debug(f"Request incoming containing: {posted_data}")
     if "code_to_compile" in posted_data:
         compile_logger.info("Request received. Attempting to compile...")
-        build_args = posted_data["build_arguments"] if "build_arguments" in posted_data else "Release"
+        build_args = posted_data["build_config"] if "build_config" in posted_data else "Release"
         compile_args = posted_data["extra_arguments"] if "extra_arguments" in posted_data else None
-        return jsonify(compileOD(posted_data["code_to_compile"], compile_args=compile_args, build_args=build_args))
+        return jsonify(compileOD(posted_data["code_to_compile"], compile_args=compile_args, build_config=build_args))
     else:
         compile_logger.warning(f"Bad request received:\n{request.get_json()}")
         return abort(400)
