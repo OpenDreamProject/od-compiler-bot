@@ -47,4 +47,4 @@ def getVersion() -> Response:
     """
     Returns the current version of the compiler server
     """
-    return jsonify(__version__)
+    return jsonify({"version": __version__})  # Could expand this to give the revisions from OD
