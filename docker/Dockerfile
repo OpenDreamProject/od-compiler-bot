@@ -1,8 +1,7 @@
-FROM mcr.microsoft.com/dotnet/runtime:9.0-alpine AS builder
+FROM mcr.microsoft.com/dotnet/runtime:9.0-noble AS builder
 
 
-RUN adduser odcompile -H -D
-RUN apk add libsodium-dev
+RUN useradd --no-create-home odcompile
 
 WORKDIR /opendream
 
