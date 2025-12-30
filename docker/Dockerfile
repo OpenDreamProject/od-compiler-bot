@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/runtime:9.0-noble AS builder
+FROM mcr.microsoft.com/dotnet/runtime:10.0-noble AS builder
 
 
 RUN useradd --no-create-home odcompile
